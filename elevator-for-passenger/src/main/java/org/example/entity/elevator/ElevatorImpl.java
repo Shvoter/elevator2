@@ -84,19 +84,16 @@ public class ElevatorImpl implements Elevator {
 
     @Override
     public boolean isDirectionOfMove(Direction direction) {
-        if (this.direction == direction || this.direction == Direction.NONE) {
-            return true;
-        }
+        boolean isDirectionOfMove = this.direction == direction || this.direction == Direction.NONE;
 
-        if (internalPanelRequests.isEmpty()) {
+        if (!isDirectionOfMove && internalPanelRequests.isEmpty()) {
             if (this.direction == Direction.UP) {
-                return externalPanelRequests.lastKey() == height;
-            } else if (this.direction == Direction.DOWN) {
-                return externalPanelRequests.firstKey() == height;
+                isDirectionOfMove = externalPanelRequests.lastKey() == height;
+            } else if (this.direction == Direction.DOWN){
+                isDirectionOfMove = externalPanelRequests.firstKey() == height;
             }
         }
-        return false;
-
+        return isDirectionOfMove;
     }
 
     @Override
